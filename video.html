@@ -313,13 +313,16 @@ function setSize(width, height) {
 	video.style["width"] = width +"px";
 	video.style["height"] = height +"px";
 }
+function removePoster(){
+	document._video.removeAttribute("poster");
+}
 function switchVideo(n) {
 	if (n >= videos.length) n = 0;
 
 	var mp4 = document.getElementById("mp4");
 	var parent = mp4.parentNode;
 
-	// document._video.setAttribute("poster", videos[n][0]);
+	document._video.setAttribute("poster", videos[n][0]);
 	mp4.setAttribute("src", videos[n][1]);
 
 	if (videos[n][2]) {
@@ -412,6 +415,8 @@ hr { clear: both; margin-top: 2em;}
       <button onclick="setSize(427,240);">default size</button>
       <button onclick="setSize(600,400);">large size</button>
       <button onclick="setSize(200,100);">small size</button>
+      <button onclick="removePoster()">removePoster</button>
+      
     </div>
 <table>
       <caption>Media Events</caption>
