@@ -80,7 +80,7 @@ function init() {
       document._hasController = false;
     }
 
-
+    webm = document.getElementById("webm");
     media_properties_elts = new Array(media_properties.length);
 
     init_events("events", media_events, false);
@@ -381,6 +381,7 @@ hr { clear: both; margin-top: 2em;}
         type='video/webm'>
 -->
       <source id="mp4" src="" type="application/vnd.apple.mpegurl">
+       <source id="webm" src="" type="video/webm">
       <p>Your user agent does not support the HTML5 Video element.</p>
     </video>
     <div id="buttons">
