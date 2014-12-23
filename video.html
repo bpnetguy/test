@@ -80,7 +80,6 @@ function init() {
       document._hasController = false;
     }
 
-    webm = document.getElementById("webm");
 
     media_properties_elts = new Array(media_properties.length);
 
@@ -325,7 +324,7 @@ function switchVideo(n) {
 		}
 		webm.setAttribute("src", videos[n][2]);
 	} else {
-		if (webm.parentNode != null) {
+		if (webm && webm.parentNode != null) {
 	    	parent.removeChild(webm);
 		}
     }
