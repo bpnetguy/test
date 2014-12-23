@@ -309,6 +309,10 @@ function getController() {
 	}
 }
 
+function setSize(width, height) {
+	video.style["width"] = width +"px";
+	video.style["height"] = height +"px";
+}
 function switchVideo(n) {
 	if (n >= videos.length) n = 0;
 
@@ -404,6 +408,10 @@ hr { clear: both; margin-top: 2em;}
       <button onclick="switchVideo(2);">Bunny movie</button>
       <button onclick="switchVideo(3);">Test movie</button>
       <button onclick="window.location.reload(true);">Reload</button>
+      
+      <button onclick="setSize(427,240);">default size</button>
+      <button onclick="setSize(600,400);">large size</button>
+      <button onclick="setSize(200,100);">default size</button>
     </div>
 <table>
       <caption>Media Events</caption>
