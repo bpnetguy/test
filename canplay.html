@@ -31,6 +31,7 @@ video = document.createElement('video');
 result = document.getElementById('result');
 result.innerHTML += canPlay(video, 'application/vnd.apple.mpegURL; codecs="avc1.42E01E, mp4a.40.2"');
 result.innerHTML += canPlay(video, 'application/vnd.apple.mpegURL');
+result.innerHTML += canPlay(video, 'application/vnd.apple.mpegurl');
 result.innerHTML += canPlay(video, 'video/webm; codecs="vp8, vorbis"');
 result.innerHTML += canPlay(video, 'video/webm');
 result.innerHTML += canPlay(video, 'video/mp4');
