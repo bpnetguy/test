@@ -17,6 +17,39 @@
 <!-- <meta HTTP-EQUIV="REFRESH" content="0; url=http://youtube.com/tv/">  -->
 </head>
 <body style="color: red; font-size: 100px;">
-<video width="1280" height="720" autoplay type="application/vnd.apple.mpegurl" src="http://video.media.yql.yahoo.com/v1/hls/e773248e-5851-3385-829f-602e60be758d.m3u8?region=US&amp;site=&amp;devtype=desktop&amp;lang="></video>
+<video width="1280" height="720" autoplay type="application/vnd.apple.mpegurl" src=""></video>
+<script>
+    var logEvent = function (evt) {
+        console.log("evt " + evt.type, evt);
+    }
+    var videoElement = document.createElement('video');
+    videoElement.setAttribute("width","1280");
+    videoElement.setAttribute("height","720");
+    videoElement.setAttribute("type","application/vnd.apple.mpegurl");
+    videoElement.setAttribute("src","http://video.media.yql.yahoo.com/v1/hls/e773248e-5851-3385-829f-602e60be758d.m3u8?region=US&amp;site=&amp;devtype=desktop&amp;lang=");
+    videoElement.setAttribute("autoplay","");
+    videoElement.addEventListener('canplay', logEvent);
+    videoElement.addEventListener('error', logEvent);
+    videoElement.addEventListener('progress', logEvent);
+    videoElement.addEventListener('durationchange', logEvent);
+    videoElement.addEventListener('play', logEvent);
+    videoElement.addEventListener('pause', logEvent);
+    videoElement.addEventListener('ended', logEvent);
+    videoElement.addEventListener('loadstart', logEvent);
+    videoElement.addEventListener('emptied', logEvent);
+    videoElement.addEventListener('loadstart', logEvent);
+    videoElement.addEventListener('stalled', logEvent);
+    videoElement.addEventListener('loadeddata', logEvent);
+    videoElement.addEventListener('canplaythrough', logEvent);
+    videoElement.addEventListener('playing', logEvent);
+    videoElement.addEventListener('seeked', logEvent);
+    videoElement.addEventListener('seeking', logEvent);
+    videoElement.addEventListener('waiting', logEvent);
+    videoElement.addEventListener('abort', logEvent);
+    videoElement.addEventListener('ratechange', logEvent);
+    videoElement.addEventListener('volumechange', logEvent);
+    
+</script>
+    
 </body>
 </html>
