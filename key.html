@@ -11,6 +11,8 @@
 <script>
 var result = document.getElementById('result');
 var update=function(evt){
+  evt.preventDefault();
+  evt.preventPropagation();
   result.innerHTML = evt.type + " " + evt.keyCode + "\n" + result.innerHTML;
 }
 document.onkeydown = update;
