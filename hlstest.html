@@ -1,0 +1,33 @@
+<html>
+<head>
+    <meta http-equiv="cache-control" content="max-age=0">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT">
+    <meta http-equiv="pragma" content="no-cache">
+</head>
+<body style="color: red; font-size: 100px;">
+<video width="1280" height="720" autoplay>
+  <source type="application/vnd.apple.mpegurl" src="https://video.media.yql.yahoo.com/v1/hls/e773248e-5851-3385-829f-602e60be758d.m3u8?region=US&site=ivy&devtype=tv-widget&lang=en-US"/>
+/video>
+
+<script>
+
+var sources = ["b21ccbc4-ee31-355c-9ccc-e0b96dbe13bf","89ce52b1-fafc-3fc8-b873-4946f09b2629","d13b5967-0b55-3ba8-aada-96f5da84112e","4acdbee8-839e-3b72-a2fe-e07959bbebc5","8eca8a0e-99cb-3535-a29b-c6c83fa28e2e","9d8653d1-6cb8-3712-8034-00d16e3952f4","0a9e9430-0639-3fea-bacf-87edb57aab97","91b2d1ce-0b29-3735-9262-03c80cca96f0","aba24013-16ec-3c0c-90bd-28306cc803fe","cbbfd445-1869-3fe0-8733-1373e25e9e29","febe2516-eb21-360d-ba4e-681f4ebf9cdd","897ce94b-50b7-3b00-a50c-d76d1ce60887","ed1cc722-456f-33d6-9285-121f525ab236","7463e00d-eb4e-34ab-b883-2241c8751300","462b5abf-695b-3a86-9232-b4650c853b3a","69a4ab4c-5b18-3e51-a6c7-656ea7b77e5e","f0af41bb-f5a6-327f-a1eb-cfbdbe3c7ed2","828dd4d7-47d4-3acf-971f-1cf45c175b1d","2a719996-bee9-3e43-884f-fb37cf1c9d54","9e3115d6-eb5a-3f64-b4c7-1eb04b36e4db","ec903671-c67a-327a-b53b-d42b4d232ce9","bdd98fd7-d8d6-3738-83c4-e842d1c42a3b","1faac446-d543-3144-bdf2-317fc05a192d","e1e9cda2-b7ef-35cd-bf5d-41db879e8c36","b7120d79-7a56-3e34-a897-5892669ac42a","72e56d1f-4a7f-333e-a085-ab5c4cf2df93","5f3fb9e0-e2df-3ce7-9ebf-059effeed416","90d0da66-9eaa-3058-b444-8d5e018d55b7","4a051222-828a-3e7c-af9b-7ca984ef3726","a456f1a8-ceab-35df-ab4d-fa7aca747bdd","80fbe0f9-280d-3ee2-80ad-e8cb3d670771","a83b6e3b-600a-323b-935f-8de879303342","68063f75-4412-3aba-9070-108bce18d629","ceecd001-9bf1-3721-bb58-47a1b43b7ad0","b27bf1ef-caad-3f4d-9420-feefb631683f","0b231325-5b09-3f15-bbca-20467d9ad285","a0dc4c25-69aa-34d2-8feb-c84d11d7ff26","5ce7e4b2-fcb2-33ce-86ac-b467e2926996","b6d5fff7-674d-3665-83ab-a60e5c0d8c75","76e91558-f439-3c51-9fea-b59aff000792"];
+var len = sources.length;
+var index = 0;
+var videoEl = document.getElementsByTagName('video')[0];
+var sourceEl = document.getElementsByTagName('source')[0];
+setInterval(function(){
+
+
+  index = (index + 1) % len;
+  videoEl.pause();
+  sourceEl.src = "https://video.media.yql.yahoo.com/v1/hls/"  + sources[index] + ".m3u8?region=US&site=ivy&devtype=tv-widget&lang=en-US";
+  videoEl.load();
+  videoEl.play();
+},10000);
+
+</script>
+</body>
+</html>
