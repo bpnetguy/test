@@ -18,15 +18,19 @@ var len = sources.length;
 var index = 0;
 var videoEl = document.getElementsByTagName('video')[0];
 var sourceEl = document.getElementsByTagName('source')[0];
-setInterval(function(){
+// setInterval(function(){
 
 
-  index = (index + 1) % len;
+  index = parseInt(Math.random() * len);
   videoEl.pause();
   sourceEl.src = "https://video.media.yql.yahoo.com/v1/hls/"  + sources[index] + ".m3u8?region=US&site=ivy&devtype=tv-widget&lang=en-US";
   videoEl.load();
   videoEl.play();
-},10000);
+// },10000);
+
+setTimeout(function(){
+    window.location.reload(true);
+}, 20000);
 
 </script>
 </body>
