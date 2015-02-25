@@ -81,13 +81,14 @@ media_events["volumechange"] = 0;
     		}, false);
     		
         }
-    
-        // v.load();
-        v.play();
         v.ontimeupdate  = function(evt) {
             myTime.innerHTML = evt.target.currentTime;
             console.log(evt.target.currentTime);
         }
+    
+        v.load();
+        v.play();
+
         var right = window.VK_RIGHT || 39
         document.onkeydown = function(evt){
     
