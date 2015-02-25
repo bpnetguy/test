@@ -24,7 +24,7 @@
     setTimeout(function(){
         var v = document.getElementsByTagName('video')[0];
         v.ontimeupdate  = function(evt) {
-            console.log(evt);
+            console.log(evt.target.currentTime);
         }
         var index = 1;
         var interval = setInterval(function(){
