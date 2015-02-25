@@ -96,7 +96,11 @@ document.addEventListener("DOMContentLoaded", function(){
                 v.play();
 
             } else if(evt.keyCode === right ) {
+                var duration = v.duration;
                 var t = v.currentTime + 50;
+                if(t < duration) {
+                    t = duration -50;
+                }
                 v.currentTime = t;
             } else {
                 var t = v.currentTime - 50;
