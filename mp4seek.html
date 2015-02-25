@@ -98,14 +98,12 @@ document.addEventListener("DOMContentLoaded", function(){
             } else if(evt.keyCode === right ) {
                 var t = v.currentTime + 50;
                 v.currentTime = t;
-                v.play()
             } else {
                 var t = v.currentTime - 50;
                 if(t <0) {
                     t = 0;
                 }
                 v.currentTime = t;
-                v.play()
             } 
             
         }
