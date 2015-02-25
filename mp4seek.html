@@ -108,8 +108,9 @@ document.addEventListener("DOMContentLoaded", function(){
 
             } else if(evt.keyCode === right ) {
                 var t = v.currentTime + 50;
-                if(t > v.durration) {
-                    t = v.duration - 10;
+                var duration = v.duration || 400;
+                if(t > durration) {
+                    t = duration - 10;
                 }
             } else {
                 var t = v.currentTime - 50;
