@@ -65,7 +65,7 @@ media_events["ratechange"] = 0;
 media_events["resize"] = 0;
 media_events["volumechange"] = 0;
 
-
+document.addEventListener("DOMContentLoaded", function(){
     
 
         var v = document.getElementsByTagName('video')[0];
@@ -115,6 +115,8 @@ media_events["volumechange"] = 0;
         //     index++;
 
         // }, 200)
+}, false);
+    
         
 </script>
 </body>
