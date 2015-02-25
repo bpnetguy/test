@@ -77,15 +77,10 @@ document.addEventListener("DOMContentLoaded", function(){
         
         for (key in media_events) {
     		v.addEventListener(key, function(evt){
-    		    console.log(evt.type);
+    	        myTime.innerHTML = evt.target.currentTime  + " " + evt.type;
     		}, false);
     		
         }
-        v.ontimeupdate  = function(evt) {
-            myTime.innerHTML = evt.target.currentTime;
-            console.log(evt.target.currentTime);
-        }
-    
         v.load();
         v.play();
 
