@@ -25,11 +25,11 @@
 
     setTimeout(function(){
         var v = document.getElementsByTagName('video')[0
-        var time = document.getElementById("time");
+        var myTime = document.getElementById("time");
         v.load();
         v.play();
         v.ontimeupdate  = function(evt) {
-            time.innerHTML = evt.target.currentTime;
+            myTime.innerHTML = evt.target.currentTime;
             console.log(evt.target.currentTime);
         }
         var right = window.VK_RIGHT || 39
