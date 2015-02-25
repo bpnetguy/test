@@ -23,6 +23,9 @@
 <script>
     setTimeout(function(){
         var v = document.getElementsByTagName('video')[0];
+        v.ontimeupdate  = function(evt) {
+            console.log(evt);
+        }
         var index = 1;
         var interval = setInterval(function(){
             v.currentTime = index * 10;
