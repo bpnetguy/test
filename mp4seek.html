@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function(){
         
         for (key in media_events) {
     		v.addEventListener(key, function(evt){
-    	        myTime.innerHTML = evt.target.currentTime  + " " + evt.type;
+    	        myTime.innerHTML = evt.target.currentTime  + "<br/> " + evt.type;
     		}, false);
     		
         }
