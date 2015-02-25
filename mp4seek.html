@@ -25,13 +25,13 @@
         var v = document.getElementsByTagName('video')[0];
         var index = 1;
         var interval = setInterval(function(){
-            v.currentTime = index * 50;
-            if(index === 6) {
+            v.currentTime = index * 10;
+            if(index === 40) {
                 clearInterval(interval);
             }
             index++;
 
-        }, 400)
+        }, 300)
         
     },4000)
 </script>
