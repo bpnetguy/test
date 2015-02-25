@@ -23,7 +23,9 @@
 <script>
     setInterval(function(){
         var v = document.getElementsByTagName('video')[0];
+        v.pause();
         v.currentTime = parseInt(Math.random() * 400);
+        v.play();
     },4000)
 </script>
 </body>
