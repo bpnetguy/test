@@ -3,8 +3,15 @@
 <head>
 <link rel="stylesheet" type="text/css" href="css/index.css" />
 </head>
-<body><video controls src="http://media.w3.org/2010/05/bunny/trailer.mp4"
+<body><video id="v" controls src="http://media.w3.org/2010/05/bunny/trailer.mp4"
  autoplay webkit-playsinline="true">
     </video>
+    <script>
+     var v = document.getElementById("v");
+     v.addEventListener('canplaythrough', function(){
+      v.play();
+     });
+
+    </script>
 </body>
 </html>
