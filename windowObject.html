@@ -12,6 +12,9 @@
 result = document.getElementById('result');
 result.innerHTML += Object.keys(window).join(", ") + "\n"
 window.close();
+window.onerror = function(msg) {
+    console.log(msg);
+}
 </script>
 <script src="https://hotmail.com"></script>
 
