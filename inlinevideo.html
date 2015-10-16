@@ -3,17 +3,42 @@
 <head>
 <link rel="stylesheet" type="text/css" href="css/index.css" />
 </head>
-<body><video id="v" src="http://media.w3.org/2010/05/bunny/trailer.mp4"
- autoplay webkit-playsinline="true">
-    </video>
+<body>
+ 
+ 
+ <div id="video" class="ad-view">
+  <div class="video-frame">
+ 
+    <!-- A simple video element. We want to show the default controls and
+         want the video to begin playback inline (rather than fullscreen).
+         We also attach an ad-outlet so that we can easily reference this
+         element from the View Controller code -->
+    <video src="http://media.w3.org/2010/05/bunny/trailer.mp4" controls webkit-playsinline ad-outlet="video"></video>
+ 
+    <p>
+      The launch experience.
+    </p>
+ 
+  </div>
+</div>
+
+
+
     <script>
-     var v = document.getElementById("v");
-     v.addEventListener('canplaythrough', function(){
-      v.play();
-     }, false);
-     
-     v.load();
-     v.play();
+    /*
+var video = document.createElement('video');
+video.setAttribute('webkit-playsinline, 'true'); // must be set before src is set or it will be ignored
+video.setAttribute('src', 'assets/launch.m4v');
+document.body.appendChild(video); // append video to DOM
+ 
+video.addEventListener('canplaythrough', function(){
+    video.play(); // wait until enough of the video has been downloaded to play it through without hiccups
+}, false);
+ 
+video.load();  // must be called after the canplaythrough event listener is set
+video.play();  // required for pre-iOS 4.3 devices
+video.pause(); // required for pre-iOS 4.3 devices
+*/
 
     </script>
 </body>
