@@ -15,9 +15,9 @@
          want the video to begin playback inline (rather than fullscreen).
          We also attach an ad-outlet so that we can easily reference this
          element from the View Controller code -->
-    <video src="http://media.w3.org/2010/05/bunny/trailer.mp4" controls webkit-playsinline ad-outlet="video"></video>
+    <video id="v" src="http://media.w3.org/2010/05/bunny/trailer.mp4" controls webkit-playsinline ad-outlet="video"></video>
  
-    <p>
+    <p style="position:absolute;left:50px;color:red;top:50px">
       The launch experience.
     </p>
  
@@ -27,6 +27,10 @@
 
 
     <script>
+
+     var v = document.getElementById("v");
+     v.play();
+
     /*
 var video = document.createElement('video');
 video.setAttribute('webkit-playsinline, 'true'); // must be set before src is set or it will be ignored
