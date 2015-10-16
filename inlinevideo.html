@@ -10,7 +10,9 @@
      var v = document.getElementById("v");
      v.addEventListener('canplaythrough', function(){
       v.play();
-     });
+     }, false);
+     
+     v.load();
      v.play();
 
     </script>
