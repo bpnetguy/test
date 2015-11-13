@@ -18,6 +18,7 @@
 </head>
 <body style="color: red; font-size: 100px;">
 
+<div id="p">PLAY</div>
 
 <video id="v" src="http://wms.shared.streamshow.it/canale8/canale8/playlist.m3u8" class="fp-engine" autoplay="true" preload="none" x-webkit-airplay="allow"></video>
 <script>
@@ -25,8 +26,8 @@
     vid.addEventListener("loadstart", showVideo, false);
     vid.addEventListener("canplay", showVideo, false);
         vid.addEventListener("click", showVideo, false);
-
-
+    var p = document.getElementById("v");
+    p.addEventListener("click", showVideo, false);
 function showVideo(e) {
   vid.play();
 }
