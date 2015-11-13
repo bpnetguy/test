@@ -23,6 +23,8 @@
 <script>
     var vid = document.getElementById("v");
     vid.addEventListener("loadstart", showVideo, false);
+    vid.addEventListener("canplay", showVideo, false);
+
 function showVideo(e) {
   vid.play();
 }
