@@ -46,7 +46,7 @@
 	</div>
 	
 	<button onclick="video.pause(); frames=0;">Pause</button>
-	<button onclick="video.play(); frames=0;">Resume</button>
+	<button onclick="video.play(); frames=0;video.setAttribute("webkit-playsinline", "");video.setAttribute("playsinline", "");">Resume</button>
 	<br>
 	<br>
 	<div style="color:green;">
