@@ -24,6 +24,8 @@
     var vid = document.getElementById("v");
     vid.addEventListener("loadstart", showVideo, false);
     vid.addEventListener("canplay", showVideo, false);
+        vid.addEventListener("click", showVideo, false);
+
 
 function showVideo(e) {
   vid.play();
