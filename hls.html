@@ -19,7 +19,14 @@
 <body style="color: red; font-size: 100px;">
 
 
-<video src="http://wms.shared.streamshow.it/canale8/canale8/playlist.m3u8" class="fp-engine" autoplay="true" preload="none" x-webkit-airplay="allow"></video>
-   
+<video id="v" src="http://wms.shared.streamshow.it/canale8/canale8/playlist.m3u8" class="fp-engine" autoplay="true" preload="none" x-webkit-airplay="allow"></video>
+<script>
+    var vid = document.getElementById("v");
+    vid.addEventListener("loadstart", showVideo, false);
+function showVideo(e) {
+  vid.play();
+}
+
+</script>   
 </body>
 </html>
