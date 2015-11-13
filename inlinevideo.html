@@ -15,7 +15,10 @@
          want the video to begin playback inline (rather than fullscreen).
          We also attach an ad-outlet so that we can easily reference this
          element from the View Controller code -->
-    <video id="v" src="http://media.w3.org/2010/05/bunny/trailer.mp4" controls webkit-playsinline ad-outlet="video"></video>
+    <video id="v" controls webkit-playsinline ad-outlet="video">
+     
+      <source type="application/vnd.apple.mpegurl" src="https://yahoo-live.hs.llnwd.net/jr_yeptest.m3u8">
+    </video>
  
     <p style="position:absolute;left:50px;color:red;top:50px">
       The launch experience.
