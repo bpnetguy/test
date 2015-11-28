@@ -235,7 +235,7 @@ function update_properties() {
     }
     for (key in media_properties) {
 		var val = eval("document._video." + media_properties[key]);
-		if(key === "error") {
+		if(key === "0") {
 			media_properties_elts[i++].textContent = JSON.stringify(val);
 		} else {
 			media_properties_elts[i++].textContent = val;
