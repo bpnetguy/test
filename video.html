@@ -235,7 +235,12 @@ function update_properties() {
     }
     for (key in media_properties) {
 		var val = eval("document._video." + media_properties[key]);
-		media_properties_elts[i++].textContent = val;
+		if(key === "error") {
+			media_properties_elts[i++].textContent = JSON.stringify(val);
+		} else {
+			media_properties_elts[i++].textContent = val;
+		}
+		
     }
     if (document._hasController) {
       i = 0;
