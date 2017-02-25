@@ -2,11 +2,119 @@
 <html>
   <head>
     <style>
+      /* reset */
+* {
+	margin: 0;
+	padding: 0;
+}
+h5 {
+  margin-top: 10px;
+}
+
+.container {
+  display: block;
+  width: 80%;
+  margin: 0 auto;
+  background: rgba(0,0,0,.1);
+  padding: 10px;
+}
+
+nav {
+}
+nav > ul, nav li {
+  display: inline-block;
+}
+
+.rec {
+  minHeight: 100px;
+  padding: 10px;
+}
     
     </style>
   </head>
   <body>
     
-    <code>Test</code>
+<div class="container">
+  <h5>Center Align Container</h5>
+  <code>margin: 0 auto;</code>
+  <h5>Unstyle list type</h5>
+<code>
+list-style: none;
+</code>
+
+  <h5>Reset Css</h5>
+  <code>
+  * {
+    margin: 0;
+    padding: 0;
+  }</code>
+  <h5>Vertical Alignment With Table Cell</h5>
+  <code>
+.container {
+	top: 0;
+	left: 0;	
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.85);
+	display: table;
+}
+.container > div {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}</code>
+
+<h5>right aligned navigation</h5>
+<code>
+  <div style="width: 100%">
+  <nav style="float:right">
+    <ul> <li>Item 1</li><li>Item 2</li>
+    </ul>
+  </nav>
+  </div>
+</code>
+<h5>2-column system flexbox</h5>
+<code>
+  <div style="display: flex;width: 100%;">
+    <div class="rec" style="width: 200px; background: green;">Column 1</div>
+    <div class="rec" style="flex-grow:1; background: yellow;">Column 2</div>
+  </div>
+</code>
+<h5>2-column system float</h5>
+<code>
+  <div style="display:block; width: 100%;">
+    <div class="rec" style="width: 200px; float: left; background: green;">Column 1</div>
+    <div class="rec" style="background: yellow;">Column 2</div>
+  </div>
+</code>
+<h5>3-column system flexbox</h5>
+<code>
+  <div  style="display: flex;width: 100%;">
+    <div class="rec" style="width: 200px; background: green;">Column 1</div>
+    <div class="rec"  style="width: 200px; background: blue;">Column 2</div>
+    <div class="rec" style="flex-grow:1; background: yellow;">Column 3</div>
+  </div>
+</code>
+
+
+<h5>Right Aligned Menu - float</h5>
+<code>
+  <div  style="width: 100%;">
+    <div class="rec" style="float: right; background: yellow;">Menu As Login As You Want</div>
+    <div class="rec" style="background: green;">Empty</div>
+  </div>
+</code>
+
+<h5>Right Aligned Menu - flexbox</h5>
+<code>
+  <div  style="display: flex; width: 100%;">
+    <div class="rec" style="flex-grow: 1; background: green;"></div>
+    <div class="rec" style="background: yellow;">Menu As Login As You Want</div>
+  </div>
+</code>
+</div>
+
+
   </body>
  </html>
