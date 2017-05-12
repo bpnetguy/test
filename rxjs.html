@@ -1,0 +1,95 @@
+<html>
+<head>
+    <meta http-equiv="cache-control" content="max-age=0">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT">
+    <meta http-equiv="pragma" content="no-cache">
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.all.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/rxjs-dom/7.0.3/rx.dom.js"></script>
+</head>
+<body style="color: red; font-size: 100px;">
+  <script>
+
+// delay, throttle, debounce
+var source = Rx.Observable.of(1,2,3,4,5,6)
+    .delay(function (x) { return Rx.Observable.timer(x * 1000); })
+    // 6
+    // .debounce(2000)
+    // 1, 3, 6
+    .throttle(2000)
+    .subscribe(function(num) {
+      console.log(new Date(), num);
+    })
+
+// ticker, interval, map, ...
+
+var ticker = Rx.Observable.interval(3000)
+   // 0 2 4 6 8
+  .map(function(i) {
+    return i  *  2;
+  })
+  // when use flas
+  // .flatMap(function(i) {
+  // cancels old Observable if new one comes in
+  .switchMap(function(i) {
+    if (i % 4 === 0) {
+      return Rx.Observable.interval(3000).take(3).map(function(j) { return 'guaranteed only with flatMap take ' + i + ', ' + j; });
+    } else {
+      return  Rx.Observable.interval(200).take(3).map(function(j) { return 'take ' + i + ', ' + j; });
+    }
+  });
+  ticker.subscribe( function(i) {
+    console.log(i);
+  });
+
+  var sequentialObs$ =  Rx.DOM.ajax({
+           url: '/package.json',
+           crossDomain: true
+       }).flatMap(function (resp) {
+           var queryForNextSearch = JSON.parse(resp.response);
+           return Rx.DOM.ajax({
+               url: '/key.html',
+               crossDomain: true
+           })
+       })
+       sequentialObs$.subscribe(function (resp) {
+           console.log(resp.response)
+       })
+
+
+       var count = 0;
+
+
+// retry
+var source = Rx.Observable.interval(1000)
+    //same as flatMap
+    .selectMany(function () {
+        if (++count < 2) {
+            return Rx.Observable.throw(new Error());
+        }
+        return Rx.Observable.return(42);
+    })
+    .retry(3)
+    .take(1);
+
+var subscription = source.subscribe(
+    function (x) {
+        console.log('Next: ' + x);
+    },
+    function (err) {
+        console.log('Error: ' + err);
+    },
+    function () {
+        console.log('Completed');
+    });
+
+  </script>
+
+
+
+
+
+</body>
+</html>
