@@ -47,7 +47,7 @@ media_events["ratechange"] = 0;
 media_events["resize"] = 0;
 media_events["volumechange"] = 0;
 
-function init_events(arrayEventDef,) {
+function init_events(arrayEventDef) {
     for (key in arrayEventDef) {
 
 		document._video.addEventListener(key, function(e) {
