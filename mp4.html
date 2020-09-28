@@ -56,6 +56,11 @@ function init_events(arrayEventDef) {
 
 		document._video.addEventListener(key, function(e) {
          console.log("evt", Date.now(), e);                                
+         var v = document._video;
+         if (v && v.buffered && v.buffered.length) {
+console.log("buffered", v.buffered.start(0), v.bufferred.end(0));
+console.log(v.currentTime, v.duration);
+         }
          }, false);
 	
     }
