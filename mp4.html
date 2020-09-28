@@ -58,9 +58,9 @@ function init_events(arrayEventDef) {
          console.log("evt", Date.now(), e);                                
          var v = document._video;
          if (v && v.buffered && v.buffered.length) {
-console.log("buffered", v.buffered.start(0), v.bufferred.end(0));
-console.log(v.currentTime, v.duration);
+console.log("buffered", v.buffered.start(0), v.buffered.end(0));
          }
+	console.log(v.currentTime, v.duration);
          }, false);
 	
     }
