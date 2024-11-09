@@ -1,0 +1,331 @@
+<html>
+
+<body>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <div id="timeline" style="height: 720px;">
+    </div>
+    <style>
+        #legend {
+            background-color: white;
+            padding: 5px;
+            border: 1px solid black;
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+        }
+
+        #legend:hover #legend-content {
+            display: block;
+        }
+
+        #legend #legend-content {
+            display: none;
+        }
+    </style>
+
+    <div id="legend" style="
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    border: 1px solid black;
+    padding: 3px;">
+        Legend
+        <pre id="legend-content">
+        s - save to file
+        x - stop recording
+        c - clear
+        t - toggle thread mode
+        l - load file
+        r - refresh page
+        space - start/stop recording</pre>
+    </div>
+    <script type="text/javascript">
+        let socketMode = false;
+        google.charts.load('current', { 'packages': ['timeline'] });
+        google.charts.setOnLoadCallback(drawChart);
+        let threadMode = false;
+
+        const generateTooltip = (row, initialStartTime) => {
+            return `threadId: ${row.threadId} <br/> name: ${row.name} <br/> relativeStartTime: ${row.startTime - initialStartTime}<br/> startTime: ${row.startTime} <br/>duration: ${row.duration}`
+        }
+        const generateRow = (row, initialStartTime) => {
+            const tooltip = generateTooltip(row, initialStartTime);
+            return [threadMode ? row.threadId : row.name.split(" ")[0].substring(0, 40), row.name.substring(0, 400), tooltip, new Date(row.startTime), new Date((row.startTime + row.duration))];
+        }
+        async function drawChart() {
+            var container = document.getElementById('timeline');
+            var chart = new google.visualization.Timeline(container);
+            var dataTable = new google.visualization.DataTable();
+            var d = new Date();
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const file = urlParams.get('file') || "start.json";
+            const index = urlParams.get('index') || 0;
+            const startTimeParam = parseInt(urlParams.get('startTime') || 0);
+            let initialStartTime = 0;
+
+            const endTimeParam = parseInt(urlParams.get('endTime') || Date.now());
+            dataTable.addColumn({ type: 'string', id: 'Time' });
+            dataTable.addColumn({ type: 'string', id: 'Name' });
+            dataTable.addColumn({ type: 'string', role: 'tooltip' });
+
+            dataTable.addColumn({ type: 'date', id: 'Start' });
+            dataTable.addColumn({ type: 'date', id: 'End' });
+            let data = [];
+            let start = true;
+            socketMode = file.startsWith("ws://")
+            const startRecording = () => {
+                start = true;
+                document.body.style.border = "3px solid red"
+            }
+            const stopRecording = () => {
+                start = false;
+                document.body.style.border = "none";
+            }
+            const refreshTable = () => {
+                const el = document.getElementsByClassName("google-visualization-tooltip")
+                if (el.length > 0) {
+                    while (el.length > 0) {
+                        el[0].remove();
+                    }
+                }
+                data.sort((a, b) => a.startTime - b.startTime);
+                dataTable.removeRows(0, dataTable.getNumberOfRows());
+                dataTable.addRows(data.map((row, index) => {
+                    const tooltip = generateTooltip(row, initialStartTime);
+                    return generateRow(row, initialStartTime);
+                }));
+                chart.draw(dataTable);
+            }
+            const loadFile = () => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.json';
+                input.addEventListener('change', async (event) => {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const text = await file.text();
+                        data = JSON.parse(text);
+                        refreshTable();
+                    }
+                });
+                input.click();
+            }
+            const handleKeyEvents = (event) => {
+                if (event.key === "r") {
+                    location.reload();
+                }
+                if (event.key === "s") {
+                    const filename = prompt("filename", data[0].name.split(" ")[0] + '-' + (new Date()).toISOString() + '.json')
+                    if (!filename) {
+                        return;
+                    }
+                    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }
+                if (event.key === "x") {
+                    stopRecording();
+
+                }
+                if (event.key === "c") {
+                    startRecording();
+                    data = [];
+                    dataTable.removeRows(0, dataTable.getNumberOfRows());
+                    document.getElementById("timeline").style.display = "none"
+                }
+                if (event.key === "t") {
+                    threadMode = !threadMode;
+                    refreshTable()
+                }
+                if (event.key === "l") {
+                    stopRecording();
+                    loadFile();
+                }
+
+                if (event.key === " ") {
+                    if (start) {
+                        stopRecording();
+                    } else {
+                        startRecording();
+                    }
+                }
+            }
+            const onSelect = (evt) => {
+                const [selection] = chart.getSelection();
+                const row = data[selection.row];
+                const urlParams = new URLSearchParams(window.location.search);
+                urlParams.set('startTime', row.startTime);
+                urlParams.set('endTime', row.startTime + row.duration);
+                urlParams.set('file', "pushState");
+                const newData = data.filter(d => {
+
+                    return d.startTime >= row.startTime && d.startTime <= (row.startTime + row.duration);
+
+                });
+                history.pushState({ data: newData }, "deepdiv", "?" + urlParams.toString());
+                location.reload();
+            }
+            if (socketMode) {
+                const socket = new WebSocket(file);
+                // chart.draw(dataTable);
+                socket.addEventListener('open', function (event) {
+                    console.log('Connected to WebSocket server');
+                });
+                document.body.style.border = "3px solid red"
+                socket.addEventListener('message', function (event) {
+                    // console.log('Message from server ', event.data);
+                    if (!start) {
+                        return;
+                    }
+                    row = JSON.parse(event.data)
+                    if (initialStartTime === 0) {
+                        initialStartTime = row.startTime;
+                    }
+                    data.push(row);
+                    document.getElementById("timeline").style.display = "block"
+
+                    refreshTable();
+
+                    // const tooltip = generateTooltip(row, initialStartTime);
+                    // dataTable.addRows(
+                    //     // [[row.threadId, row.name.substring(0, 400), tooltip, new Date(row.startTime), new Date((row.startTime + row.duration))]]);
+                    //     [generateRow(row, initialStartTime)]);
+
+                    //     // [[row.name.split(" ")[0].substring(0, 40), row.name.substring(0, 400), tooltip, new Date(row.startTime), new Date((row.startTime + row.duration))]]);
+
+                    // chart.draw(dataTable);
+                    // Handle the message received from the server
+                });
+
+                socket.addEventListener('close', function (event) {
+                    console.log('Disconnected from WebSocket server');
+                });
+
+                socket.addEventListener('error', function (event) {
+                    console.error('WebSocket error: ', event);
+                });
+                window.addEventListener('beforeunload', function (event) {
+                    socket.close();
+                });
+
+
+
+                document.addEventListener('keypress', function (event) {
+                    handleKeyEvents(event);
+                });
+                // google.visualization.events.addListener(chart, 'select', (evt) => {
+
+                //     const [selection] = chart.getSelection();
+                //     const row = data[selection.row];
+                //     console.log(row);
+                //     const startTime = row.startTime;
+                //     const endTime = row.startTime + row.duration;
+                //     data = data.filter(d => {
+
+                //         return d.startTime >= startTime && d.startTime <= endTime;
+
+                //     });
+                //     start = false;
+                //     refreshTable();
+
+                // });
+                // 
+
+            } else {
+                if (file === "pushState") {
+                    data = history.state.data
+                } else {
+                    try {
+                        const json = await fetch(file)
+                            .then(response => response.json());
+                        data = json;
+                    } catch (e) {
+                        console.error(e);
+                        data = [{ startTime: Date.now(), duration: 1000, name: "Press lowercase 'L' to load a file" }];
+                    }
+                }
+
+
+                data.forEach(element => {
+                    if (element.name.includes("handleItem")) {
+                        element.name = "handleItem";
+                    }
+
+                });
+                if (startTimeParam) {
+                    data = data.filter(d => {
+
+                        return d.startTime >= startTimeParam && d.startTime <= endTimeParam;
+
+                    });
+                }
+                initialStartTime = data[0].startTime;
+                if (!startTimeParam) {
+                    // window.history.replaceState({}, undefined, location.search + "&startTime=" + initialStartTime)
+                }
+
+
+                dataTable.addRows(data.map((row, index) => {
+                    return generateRow(row, initialStartTime);
+                }));
+                document.addEventListener('keypress', function (event) {
+                    handleKeyEvents(event);
+                });
+                chart.draw(dataTable);
+
+
+
+
+            }
+            google.visualization.events.addListener(chart, 'select', onSelect);
+
+            window.addEventListener("popstate", (event) => {
+                location.reload();
+            });
+
+
+
+        }
+
+    </script>
+
+    <script>
+        // tell the embed parent frame the height of the content
+        if (window.parent && window.parent.parent) {
+            window.parent.parent.postMessage(["resultsFrame", {
+                height: document.body.getBoundingClientRect().height,
+                slug: ""
+            }], "*")
+        }
+
+        // always overwrite window.name, in case users try to set it manually
+        window.name = "result"
+    </script>
+
+    <script>
+        let allLines = []
+
+        window.addEventListener("message", (message) => {
+            if (message.data.console) {
+                let insert = document.querySelector("#insert")
+                allLines.push(message.data.console.payload)
+                insert.innerHTML = allLines.join(";\r")
+
+                let result = eval.call(null, message.data.console.payload)
+                if (result !== undefined) {
+                    console.log(result)
+                }
+            }
+        })
+    </script>
+
+
+
+</body>
