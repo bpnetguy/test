@@ -50,7 +50,7 @@
         }
         const generateRow = (row, initialStartTime) => {
             const tooltip = generateTooltip(row, initialStartTime);
-            return [threadMode ? row.threadId : row.name.split(" ")[0].substring(0, 40), row.name.substring(0, 400), tooltip, new Date(row.startTime), new Date((row.startTime + row.duration))];
+            return [threadMode ? row.threadId && row.threadId.split(" ")[0] : row.name.split(" ")[0].substring(0, 40), row.name.substring(0, 400), tooltip, new Date(row.startTime), new Date((row.startTime + row.duration))];
         }
         async function drawChart() {
             var container = document.getElementById('timeline');
@@ -236,7 +236,7 @@
                 //     refreshTable();
 
                 // });
-                // 
+                //
 
             } else {
                 if (file === "pushState") {
