@@ -41,15 +41,19 @@
     </div>
     <script type="text/javascript">
         let socketMode = false;
+        let offset = 473;
         google.charts.load('current', { 'packages': ['timeline'] });
         google.charts.setOnLoadCallback(drawChart);
         let threadMode = false;
-
         const generateTooltip = (row, initialStartTime) => {
             return `threadId: ${row.threadId} <br/> name: ${row.name} <br/> relativeStartTime: ${row.startTime - initialStartTime}<br/> startTime: ${row.startTime} <br/>duration: ${row.duration}`
         }
         const generateRow = (row, initialStartTime) => {
             const tooltip = generateTooltip(row, initialStartTime);
+            isRDZ = row.name.startsWith("rdz")
+            if (isRDZ && offset) {
+                return [threadMode ? row.threadId && row.threadId.split(" ")[0] : row.name.split(" ")[0].substring(0, 40), row.name.substring(0, 400), tooltip, new Date(row.startTime + offset), new Date((row.startTime + row.duration + offset))];
+            }
             return [threadMode ? row.threadId && row.threadId.split(" ")[0] : row.name.split(" ")[0].substring(0, 40), row.name.substring(0, 400), tooltip, new Date(row.startTime), new Date((row.startTime + row.duration))];
         }
         async function drawChart() {
@@ -62,6 +66,7 @@
             const file = urlParams.get('file') || "start.json";
             const index = urlParams.get('index') || 0;
             const startTimeParam = parseInt(urlParams.get('startTime') || 0);
+            urlParams.get("offset") && (offset = parseInt(urlParams.get("offset")))
             let initialStartTime = 0;
 
             const endTimeParam = parseInt(urlParams.get('endTime') || Date.now());
@@ -92,7 +97,6 @@
                 data.sort((a, b) => a.startTime - b.startTime);
                 dataTable.removeRows(0, dataTable.getNumberOfRows());
                 dataTable.addRows(data.map((row, index) => {
-                    const tooltip = generateTooltip(row, initialStartTime);
                     return generateRow(row, initialStartTime);
                 }));
                 chart.draw(dataTable);
@@ -184,11 +188,15 @@
                     if (!start) {
                         return;
                     }
-                    row = JSON.parse(event.data)
-                    if (initialStartTime === 0) {
-                        initialStartTime = row.startTime;
+                    const result = JSON.parse(event.data);
+                    if (Array.isArray(result)) {
+                        data = data.concat(result);
+                    } else {
+                        data.push(result);
+                        if (initialStartTime === 0) {
+                            initialStartTime = result.startTime;
+                        }
                     }
-                    data.push(row);
                     document.getElementById("timeline").style.display = "block"
 
                     refreshTable();
@@ -325,7 +333,4 @@
             }
         })
     </script>
-
-
-
 </body>
