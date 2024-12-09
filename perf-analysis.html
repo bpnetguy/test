@@ -2,7 +2,7 @@
 
 <body>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <div id="timeline" style="height: 720px;">
+    <div id="timeline" style="">
     </div>
     <style>
         #legend {
@@ -12,6 +12,7 @@
             position: fixed;
             bottom: 15px;
             right: 15px;
+		
         }
 
         #legend:hover #legend-content {
@@ -21,6 +22,14 @@
         #legend #legend-content {
             display: none;
         }
+		#timeline {
+			height: 100%;
+    		top: 5px;
+    		bottom: 25px;
+    		position: absolute;
+    		display: block;
+			width: 100%;
+		}
     </style>
 
     <div id="legend" style="
@@ -333,4 +342,4 @@
             }
         })
     </script>
-</body>
+</body
