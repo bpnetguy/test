@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Venn Diagram - Flex Grid vs Other Grids</title>
+  <style>
+    body { margin: 0; padding: 40px; background: #f5f5f5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    svg { display: block; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .set-label { font-size: 18px; font-weight: 600; fill: #333; }
+    .item-text { font-size: 14px; fill: #555; }
+    .overlap-text { font-size: 14px; font-weight: 500; fill: #333; }
+    .flex-grid { fill: #4a90d9; opacity: 0.3; }
+    .other-grids { fill: #50c878; opacity: 0.3; }
+    .overlap { fill: #6bb9f0; opacity: 0.5; }
+  </style>
+</head>
+<body>
+<svg width="600" height="400" viewBox="0 0 600 400">
+  <!-- Left circle (Flex Grid) -->
+  <circle class="flex-grid" cx="250" cy="200" r="140"/>
+  
+  <!-- Right circle (Other Grids) -->
+  <circle class="other-grids" cx="350" cy="200" r="140"/>
+  
+  <!-- Overlap region (intersection) -->
+  <path class="overlap" d="M 250 140 Q 300 60 350 140 Q 300 220 250 140 Z M 350 140 Q 300 220 250 140 Q 300 60 350 140 Z"/>
+  
+  <!-- Flex Grid items (left side) -->
+  <text class="item-text" x="140" y="160">Program Thread</text>
+  <text class="item-text" x="145" y="190">TypeScript</text>
+  
+  <!-- Other Grids items (right side) -->
+  <text class="item-text" x="380" y="160">Main Thread</text>
+  <text class="item-text" x="375" y="190">BrightScript</text>
+  
+  <!-- Overlap items (center) -->
+  <text class="overlap-text" x="275" y="180">Label</text>
+  <text class="overlap-text" x="275" y="205">Poster</text>
+  <text class="overlap-text" x="275" y="230">Rectangle</text>
+  
+  <!-- Set labels -->
+  <text class="set-label" x="180" y="90">Flex Grid</text>
+  <text class="set-label" x="360" y="90">Other Grids</text>
+</svg>
+</body>
+</html>
